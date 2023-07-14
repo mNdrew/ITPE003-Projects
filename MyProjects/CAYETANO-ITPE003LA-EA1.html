@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cayetano - Enabling Assessment 1</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css">
+    <style>
+        div.form {
+            width: 50%;
+            max-width: 300px;
+            margin: auto;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: green;
+            word-wrap: break-word;
+
+        }
+        table, td, th {
+            border-collapse: collapse;
+        }
+        td {
+            padding: 5px;
+        }
+        th {
+            padding: 5px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        select{
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .btn{
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            border-color: #4CAF50;
+            resize: vertical;
+        }
+        .btn:hover{
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <script>
+        function validateForm() {
+            var studentID = document.getElementById("studentID").value;     
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var course = document.getElementById("course").value;
+
+            if (studentID === "" || name === "" || age === "" || course === "") {
+                alert("Please fill in all fields.");
+                return false;
+            } else {
+                alert("Thank You. Your information is ");
+                return true;
+            }
+        }
+    </script>
+    <div class="form">
+        <h1 style="text-align: center; word-wrap: break-word">Student Information</h1>
+            <form onsubmit="return validateForm()" style="padding: 10px; align-items: center;">
+                <table class="table">
+                    <tr>
+                        <td><label for="studentID">Student ID:</label></td>
+                        <td><input type="text" id="studentID" name="studentID" class="form-control" minlength="9" placeholder="20#######"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="name">Name:</label></td>
+                        <td><input type="text" id="name" name="name" class="form-control" placeholder=></td>
+                    </tr>
+                    <tr>
+                        <td><label for="age">Age:</label></td>
+                        <td><input type="number" id="age" name="age" class="form-control" min="0" max="200"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="course">Course:</label></td>
+                        <td class="option">
+                            <select name="course" id="course" class="form-select">
+                                <option value="" selected disabled>Select an option</option>
+                                <option value="BIT">BIT</option>
+                                <option value="BCS">BCS</option>
+                                <option value="MEB">MEB</option>
+                                <option value="BIO">BIO</option>
+                                <option value="APM">APM</option>
+                            </select>
+                    </tr>
+                </table>
+
+                <input type="submit" value="Submit" class="btn" style="font-size: 12px; font-family: Inter; font-weight: 400; word-wrap: break-word;">
+
+            </form>
+    </div>
+
+</body>
+</html>
