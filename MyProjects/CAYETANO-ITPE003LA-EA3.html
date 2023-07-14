@@ -1,0 +1,282 @@
+<html>
+    <head>
+        <title>ATM System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+
+    <!-- STYLING -->
+    <style>
+        body{
+            background-color: rgb(217, 231, 236);
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-wrap: break-word;
+        }
+
+        h1{
+            text-align: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .card{
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px; 
+            min-width: 300px;
+            max-width: 500px;
+        }
+        .card-content{
+            margin: 8px;
+        }
+        .form-item{
+            margin: 8px;
+            align-items: center;
+        }
+
+        input,select{
+            width: 100%;
+            padding: 6px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button{
+            width: 100%;
+            padding: 6px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .footer{
+            text-align: center;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 20px;
+            bottom: 0;
+        }
+
+        /* OVERLAY */
+        .overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+    </style>
+
+    
+
+    <body onload="hideOverlay(),balanceCheck()">
+        <!-- HEADER -->
+        <div class="header">
+            <br>
+        </div>
+        
+        <!-- BODY -->
+        <div class="card">
+            <h1>ATM</h1>
+            <h2>Transaction Form</h2>
+            <form id="atmForm">
+                <div class="form-item">
+                    <label for="accBalance">
+                        Account Balance
+                    </label><br>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">₱</div>
+                        </div>
+                        <input id="accBalance" class="form-control" type="number" min="0" max="1000000000000" value="" readonly>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <button type="button" id="pushtransaction" class="btn btn-secondary" onclick="balanceCheck()">Check Balance</button>
+                </div>
+
+                <!-- SELECT TRANSACTION -->
+                <div class="form-item">
+                    <label class="label">
+                        Transaction Type
+                    </label><br>
+
+                    <select id="transactionType" name="transactionType">
+                        <option value="" selected disabled hidden>Select Transaction Type</option>
+                        <option value="withdraw">Withdraw</option>
+                        <option value="deposit">Deposit</option>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <label class="label">
+                        Transaction Amount
+                    </label>
+                    <div class="input-group mb-2 mr-sm-2">
+                        
+                        <input id="transactionAmount" class="form-control" type="number" min="0" value="">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">₱</div>
+                          </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="form-item">
+                    <button type="button" id="btn" class="btn btn-success" name="pushtransaction" onclick="proceedTransaction()" >Proceed Transaction</button>
+                    
+                </div>
+            </form>
+            <!-- <button onclick="toggleOverlay()">Show Overlay</button> -->
+        </div>
+
+        
+        <!-- OVERLAY -->
+        
+        <div class="container">
+            <div class="overlay" id="transactionResponse">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="form-item">
+                            <h1>Transaction Complete</h1>
+                            <h4>Do you want to have another transaction?</h4>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-item">
+                            <button class="btn btn-success" id="btn olayYes" onclick="olayBtn(true)">Yes</button>
+                        </div>
+                        <div class="form-item">
+                            <button class="btn btn-danger" id="btn olayNo" onclick="olayBtn(false)">No</button>
+                        </div>
+
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+
+        <div class="footer">
+            Miguel Andrew B. Cayetano - S-ITPE003
+        </div>
+
+        <!-- SCRIPTING -->  
+        <script>
+            let balance = 2500;
+
+            function balanceCheck(){
+                document.getElementById("accBalance").value = balance;
+                console.log("Balance Update: " + balance);
+                return false;
+            }
+
+            function getTransAmmount(){
+                let transAmmount = document.getElementById("transactionAmount").value;
+
+                if(transAmmount == "" || transAmmount == 0 || transAmmount < 0){
+                    alert("Please enter a valid amount");
+                    return false;
+                } else {
+                console.log(transAmmount);
+                return transAmmount;
+                }   
+                return false;
+            }
+
+            function withdraw(){
+                let transAmmountWithdraw = parseFloat(getTransAmmount());
+                if(transAmmountWithdraw > balance){
+                    alert("Insufficient Balance");
+                    return false;
+                }else{
+                    balance = balance - transAmmountWithdraw;
+                    console.log("Withdrawn: " + transAmmountWithdraw)
+                }
+                balanceCheck();
+            }
+
+            function deposit(){
+                let transAmmountDeposit = parseFloat(getTransAmmount());
+
+                balance += transAmmountDeposit;
+    
+                console.log("Deposited: " + transAmmountDeposit)
+
+                balanceCheck();
+            }
+
+            function proceedTransaction(){
+                var transType = document.getElementById("transactionType").value;
+                var transAmt = getTransAmmount();
+
+                if(transType == "" || transType == null || transAmt == "" || transAmt == null || transAmt == 0 || transAmt < 0){
+                    alert("Please select a valid transaction type");
+                    return false;
+                } else {
+                    if(transType == "withdraw"){
+                        withdraw();
+                        resetTransType();
+                        toggleOverlay();
+                    }else if(transType == "deposit"){
+                        deposit();
+                        resetTransType();
+                        toggleOverlay();
+                    }else{
+                        alert("Please select a valid transaction type");
+                    }
+                }
+            }
+            
+            function resetTransType(){
+                document.getElementById("transactionType").innerHTML="<option value=''selected disabled hidden>Select Transaction Type</option><option value='withdraw'>Withdraw</option><option value='deposit'>Deposit</option>";
+                document.getElementById("transactionAmount").value = "";
+            }
+
+            function toggleOverlay() {
+                    var x = document.getElementById("transactionResponse");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+            }
+
+            function hideOverlay(){
+                var x = document.getElementById("transactionResponse");
+                x.style.display = "none";
+            }
+
+            function olayBtn(anotherTransaction){
+
+                console.log(anotherTransaction);
+
+                if(!anotherTransaction){
+                    alert("Program has been reset"+"\n\nThank you for using our ATM");
+                    hideOverlay();
+                    reloadProgram();
+                    return false;
+                } else{
+                    alert("The fields have been reset for your next transaction");
+                    hideOverlay();
+                    return true;
+                }
+            }
+
+            function reloadProgram(){
+                location.reload();
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>

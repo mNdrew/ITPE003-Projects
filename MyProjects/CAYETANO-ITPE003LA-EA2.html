@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XYZ University Enrollment System</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <style>
+        body{
+            background-color: rgb(217, 231, 236);
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-wrap: break-word;
+        }
+
+        .footer{
+            text-align: center;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        /* CARDS */
+        .card{
+            margin: auto;
+            margin-top: 5%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px; 
+            min-width: 300px;
+            max-width: 500px;
+        }
+        .card-content{
+            margin: 8px;
+        }
+        .formItem{
+            margin: 8px;
+        }
+        
+        /* HEADERS */
+        h1,h2,h3{
+            text-align: center;
+            align-items: center;
+        }  
+ 
+        /* FORM PARTS */
+        label,.label{
+            text-align: left;
+            font-weight: bold;
+            overflow-wrap: break-word;
+        }
+
+        /* INTERACTIVE PARTS */
+        input,select{
+            width: 100%;
+            padding: 6px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        
+        /* BUTTON */
+        button{
+            width: 100%;
+            padding: 6px;
+            border: 2px solid #ccc;
+            border-radius:6px;
+        }
+        .btn-good{
+            border-color: #4CAF50;
+            resize: vertical;
+        }
+        .btn-good:hover{
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-reset{
+            background-color: #e0e0e0;
+            border-color: #381414;
+            color: rgb(0, 0, 0);
+        }
+        .btn-reset:hover{
+            background-color: #1a0f0f;
+            color: white;
+        }
+
+    </style>
+
+
+    <body>
+
+        
+        <div class="card">
+            <div class="header">
+                <h1>XYZ University Enrollment System</h1>
+                <h2>Enrollment Form</h2>
+            </div>
+
+            <div class="card-content" style="margin: 0 auto;">
+
+                <form id="enrollmentForm" class="container" onsubmit="return validateForm()">
+                    <div class="formItem">
+                        <label for="studentNumber">Student Number</label><br>
+                        <input type="number" id="studentNumber" name="studentNumber" placeholder="20#######" min="200000000" minlength="3" maxlength="4"><br>
+                    </div>
+                    
+                    <div class="formItem">
+                        <label for="name">Name</label><br>
+                        <input type="text" id="name" name="name" placeholder="Name" min-lenth="1" aria-required="true"><br>
+                    </div>
+                    
+                    <div class="formItem">
+                        <label for="collegeDept">College Department</label><br>
+                        <select id="collegeDept" name="collegeDept" onchange="collegeDeptBasedCourse()">
+                            <option value="" selected hidden>Please select a course</Option>
+                            <option value="College of Science and Computer Studies">College of Science and Computer Studies</Option>
+                            <option value="College of Business and Accountancy">College of Business and Accountancy</Option>
+                            <option value="College of Tourism and Hospitality Management">College of Tourism and Hospitality Management</Option>
+                        </select><br>
+                    </div>
+                    
+                    <div class="formItem">
+                        <label for="course">Course</label><br>
+                        <select id="course" name="course">
+                            <option value="" selected disabled hidden >Select a College Department First</Option>
+                    </select><br>
+                    </div>
+
+                    <div class="formItem">
+                        <label for="units">Units</label><br>
+                        <input type="number" id="units" name="units" min="1"><br>
+
+                    </div>
+
+                    <div class="formItem" >
+                        <input type="submit" class="btn-good" value="Calculate Tuition">
+                    </div>
+        
+                        <div class="formItem">                        
+                            <button type="button" class="btn-reset" onclick="resetForm()">Reset</button>
+                        </div>
+                    
+                </form>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>© 2023 Miguel Andrew B. Cayetano</div>
+        </div>
+        <script>
+            // SET UNIT COSTS HERE 
+            var ratePerUnit = 2000.00;
+        
+            // INITIALIZE COLLEGE DEPARTMENT AND COURSE
+            var collegeCourse = {
+                "College of Science and Computer Studies": ["BS Information Technology", "BS Medical Biology", "BS Biology", "BS Applied Mathematics"], 
+                "College of Business and Accountancy": ["BS Accountancy", "BS Accounting Technology", "BS Business Administration", "BS Entrepreneurship"],
+                "College of Tourism and Hospitality Management": ["BS Hospitality Management", "BS Tourism Management"]
+            }
+        
+            
+            function validateForm(){
+                var studentNumber = document.getElementById("studentNumber").value;
+                var name = document.getElementById("name").value;
+                var collegeDept = document.getElementById("collegeDept").value;
+                var course = document.getElementById("course").value;
+                var units = document.getElementById("units").value;
+        
+                if(studentNumber === "" || name === "" || collegeDept === "" || course === "" || units === ""){
+                    alert("Please fill out all fields");
+                    return false;
+                } else { 
+                    var tuitionFee = units * ratePerUnit;
+                    var deductions = 0;
+                    if (units > 21) {
+                        deductions = tuitionFee * 0.03;
+                    } else if (units < 21) {
+                        deductions = tuitionFee * 0.015;
+                    }
+                    var totalTuitionFee = tuitionFee - deductions;
+        
+                    alert(
+                        "Student Number: " + studentNumber + 
+                        "\nName: " + name + 
+                        "\nCollege Department: " + collegeDept + 
+                        "\nCourse: " + course + 
+                        "\nUnits: " + units +  
+                        "\nCost per Unit: ₱" + ratePerUnit +
+                        "\nTuition Fee: ₱" + totalTuitionFee);
+                    return true;
+                }
+            }
+            function computeTuition(units){
+        
+            }
+            function collegeDeptBasedCourse(){
+                var collegeDept = document.getElementById("collegeDept").value;
+                var course = document.getElementById("course");
+                
+                course.innerHTML = "";
+                
+                for (var i = 0; i < collegeCourse[collegeDept].length; i++) {
+                    var option = document.createElement("option");
+                    option.value = collegeCourse[collegeDept][i];
+                    option.text = collegeCourse[collegeDept][i];
+                    course.appendChild(option); 
+                }
+            }
+        
+            function resetForm() {
+                document.getElementById("enrollmentForm").reset();
+                document.getElementById("course").innerHTML="<option value='' selected disabled hidden >Select a College Department First</Option>";
+            }
+        
+        </script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
