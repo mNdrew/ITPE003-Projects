@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SinglePageToDoList</title>
+
+    <!-- BOOTSTRAP CONFIG -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"><link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Inter">
+</head>
+<style>
+    /* GENERAL STYLING */
+    body{
+        font-family: 'Inter', sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    .navbar{
+    background-color: #357985;
+    color: white;
+    }
+
+    .webBody{
+    margin: auto;
+    padding: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    }
+    .form-control{
+    width: 100%;
+    }
+
+    .card-header{
+        font-weight: bold
+    }
+    /* STLING FOR TODO LIST */
+    * {
+        box-sizing: border-box;
+        }
+
+        /* Remove margins and padding from the list */
+        ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        }
+        
+        .footer{
+            text-align: center;
+            align-items: center;
+            background-color: #1d1d1d;
+            padding-top: 10px;
+            font-size: small;
+            color: white;
+        }
+
+        /* Style the list items */
+        ul li {
+        cursor: pointer;
+        position: relative;
+        padding: 12px 8px 12px 40px;
+        background: #eee;
+        font-size: 18px;
+        transition: 0.2s;
+
+        /* make the list items unselectable */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        ul li:hover {
+        background: #e2e2e2;
+        }
+
+        /* CROSSED OFF ITEM IN LIST CHANGE FORMAT*/
+        ul li.checked {
+        background:#39c240;
+        color: #fff;
+        text-decoration: line-through;
+        }
+
+        /*ACCOMPLISHED TASK EMOJI*/
+        ul li.checked::before {
+        content: '👍' ;
+        position: absolute;
+        top: 10px;
+        left: 16px;
+        height: 16px;
+        width: 7px;
+        justify-content: normal;
+        }
+
+        /* CLOSE BUTTON FOR EACH ITEM */
+        .close {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        left:auto;
+        padding: 12px 16px 12px 16px;
+        margin: 0;
+        }
+
+        .close:hover {
+        background-color: #f44336;
+        color: white;
+        }
+        /* ITEMS IN TASK LIST */
+        .header {
+        padding: 30px 40px;
+        color: white;
+        text-align: center;
+        }
+
+        .header:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+
+        .addBtn:hover {
+        background-color: #bbb;
+        }
+</style>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar" data-bs-theme="dark">
+        <div class="container-fluid">
+            <div class="navbar-brand">
+                HTMLToDo
+            </div>
+        </div>
+    </nav>
+
+    <!-- BODY -->
+    <div class="webBody gap-3">
+
+        <div class="card w-auto m-2">
+            <div class="card-header">
+                My To Do List
+            </div>
+
+            <div class="card-body">
+
+                <div class="form-item">
+                    <div class="input-group mb-2 mr-sm-2">
+                        <input id="task" type="text" class="form-control" placeholder="Add Task" minlength="1" required>
+
+                        <div class="input-group-append">
+                        <button class="btn btn-success btn-outline-color-secondary" type="button" onclick="newElement()">Add Task</button>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card w-auto m-2">
+            <div class="card ">
+                <div class="card-header">My Tasks</div>
+                <ul id="taskList">
+                    <li class="checked">Test</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="footer fixed-bottom">
+        <div class="col-12 text-center">
+            <p>©Miguel Andrew Cayetano | 2021 - S-ITPE003 - Laboratory 4</p>
+        </div>
+    </div>
+
+    <!-- MY SCRIPT  -->
+    <script>
+        // ITEM LIST SCRIPT
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for(i = 0; i < myNodelist.length; i++){
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("×");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        //Close Item/Remove Item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for(i = 0; i < close.length; i++){
+            close[i].onclick = function(){
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        //Update item on list when clicked
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function(ev){
+            if(ev.target.tagName === 'LI'){
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+        function newElement(){
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("task").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            console.log(inputValue);
+            if(inputValue === ''){
+                alert("You must write something!");
+            }else{
+                document.getElementById("taskList").appendChild(li);
+            }
+            document.getElementById("task").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("=");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+            
+            for(i = 0; i < close.length; i++){
+                close[i].onclick = function(){
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+            
+        }
+        
+    </script>
+    
+    <!-- BOOTSTRAP JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
