@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Online Submisission of Grades</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    </head>
+    <style>
+
+
+    </style>
+    <body>
+        <nav>
+            <div class="container-fluid bg-dark text-bg-dark py-2">
+                        <div class="d-flex justify-content-center">
+                            <h1>Online Submisission of Grades</h1>
+                </div>
+            </div>
+        </nav>
+
+        <div class="mx-5 my-3">
+
+            <div class="card">
+                <div class="card-header">
+                    Grades Form
+                </div>
+                <div class="card-body">
+                        <div class="col gy-1 px-2">
+                            <div class="row mx-1 py-1">
+                                <label for="setSubject" class="col-sm-3 col-form-label">Subject</label>
+                                <div class="col-sm-9">
+                                    <input id="subjectInput" type="text" class="form-control">    
+                                </div>
+                            </div>
+
+                            <div class="row mx-1 py-1">
+                                <label for="nameInput" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input id="nameInput" type="text" class="form-control"> 
+                                </div>
+                            </div>
+
+                            <div class="row mx-1 py-1">
+                                <label for="gradeInput" class="col-sm-3 col-form-label">Midterm Grade</label>
+                                <div class="col-sm-9">
+                                    <input id="gradeInput" type="number" class="form-control" min="0" max="100">
+                                </div>
+                            </div>
+
+                            <div class="row mx-3 pt-1"> 
+                                <a type="btn" class="btn btn-primary" onclick="addStudentToList()">Add Record</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="card my-4 mx-5">
+                <div class="card-header">Results</div>
+                <div class="card-body">
+                    <div id="courseInfo">
+                        <div class="text text-body-secondary">List format: <br>Name - Subject (Grade) </div>
+                        <ul id="gradeList">
+                            
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="./onlineSubmission.js"></script>
+        
+
+        <!-- BOOTSTRAP SCRIPT -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>   
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    </body>
+</html>
