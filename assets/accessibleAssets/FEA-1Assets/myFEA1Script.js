@@ -58,8 +58,8 @@
                     console.log("No items in cart!");
                     return;
                 }
-                alert("Thank you for your purchase!"+"\nYour total amount is ₱" + cartPriceTotal);
-                console.log("Thank you for your purchase!"+"\nYour total amount is ₱" + cartPriceTotal)
+                alert("Thank you for your purchase! Your total amount is ₱" + cartPriceTotal);
+                console.log("Thank you for your purchase! Your total amount is ₱" + cartPriceTotal)
                 resetProgram();
             }
    
