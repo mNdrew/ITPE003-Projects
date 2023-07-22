@@ -1,3 +1,5 @@
+alert('Script Loaded');
+
 const shopItems = {
     'American Prometheus - Kai Bird': 800,
     'Beyond The Story - BTS': 1200,
