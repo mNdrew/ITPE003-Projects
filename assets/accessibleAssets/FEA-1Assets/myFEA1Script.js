@@ -1,4 +1,4 @@
-alert('Script Loaded');
+// alert('Script Loaded');
 
 const shopItems = {
     'American Prometheus - Kai Bird': 800,
